@@ -2,6 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const display = document.getElementById('display');
     const labelEl = document.getElementById('label');
 
+    // --- DECLARE VARIABLES FIRST (Fixes the timer-start bug) ---
+    let totalMillis = 0; 
+    let totalStartMillis = 0;
+    let cursorIndex = 0;
+    let isSetting = false;
+    let state = 'idle';
+    let intervalId = null;
+
     // --- URL Parameter Parser ---
     function parseURLParams() {
         const params = new URLSearchParams(window.location.search);
@@ -11,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let flashEnabled = params.get('flash');
         let labelSize = params.get('size');
         let timerStartOnly = params.get('timer-start');
-        let startTimeParam = params.get('start-time'); // NEW PARAMETER
+        let startTimeParam = params.get('start-time') || params.get('start-timer'); // Supports both spellings
 
         // 1. Handle Label Text
         if (labelText) {
@@ -59,31 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
             labelEl.style.opacity = '0';
         }
 
-        // 7. Handle Start-Time (NEW: seconds based input)
+        // 7. Handle Start-Time (seconds based input)
         if (startTimeParam) {
             const seconds = parseInt(startTimeParam, 10);
             if (!isNaN(seconds) && seconds >= 0) {
-                // Convert seconds to milliseconds
                 totalMillis = seconds * 1000;
                 totalStartMillis = totalMillis;
                 // Automatically start the timer
-                setTimeout(() => startTimer(), 100); // Small delay to ensure DOM is ready
+                setTimeout(() => startTimer(), 100);
             }
         }
     }
     
-    parseURLParams();
-
-    // --- Timer Logic ---
-
-    let totalMillis = 0; 
-    let totalStartMillis = 0;
-    let cursorIndex = 0;
-    let isSetting = false;
-    
-    let state = 'idle';
-    let intervalId = null;
-
     // --- Flash Logic Manager ---
     function manageFlashState() {
         const flashEnabled = labelEl.dataset.flashEnabled === 'true';
@@ -110,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Rendering Logic ---
-
     function render() {
         let ms = totalMillis;
         if (ms < 0) ms = 0;
@@ -166,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Core Math Logic ---
-
     function incrementDigit() {
         let totalSeconds = Math.floor(totalMillis / 1000);
         let h = Math.floor(totalSeconds / 3600);
@@ -230,7 +223,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Timer Logic ---
-
     function startTimer() {
         if (state === 'running') return;
         if (totalMillis === 0 && state !== 'paused') return;
@@ -284,7 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Keyboard Controls ---
-
     document.addEventListener('keydown', (e) => {
         const key = e.key;
 
@@ -331,5 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- EXECUTE ---
+    parseURLParams();
     render();
 });
