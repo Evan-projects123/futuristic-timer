@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'ChicagoFLF';
+    src: url('../fonts/ChicagoFLF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Default color variable. JS will update this */
+    --theme-color: #00ffcc; 
+}
+
+body {
+    background-color: #050505;
+    /* Use the CSS variable for color */
+    color: var(--theme-color);
+    font-family: 'ChicagoFLF', monospace;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Use the CSS variable for the glow */
+    text-shadow: 0 0 30px rgba(0, 255, 204, 0.3); /* Keep default glow, JS will update it dynamically */
+    position: relative;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.timer-label {
+    font-size: 32px;
+    letter-spacing: 4px;
+    opacity: 0;
+    transition: opacity 0.5s ease, color 0.3s ease;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    /* Label defaults to the theme color, but can be overridden by JS */
+    color: var(--theme-color);
+}
+
+.timer-label.visible {
+    opacity: 1;
+}
+
+@keyframes flash-glow {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.timer-label.flash {
+    animation: flash-glow 0.6s ease-in-out infinite;
+}
+
+.timer-display {
+    font-size: 8rem;
+    font-family: 'ChicagoFLF', monospace;
+    display: flex;
+    align-items: baseline;
+    user-select: none;
+    margin-top: 0; 
+    /* Inherits body color */
+}
+
+.digit-pair {
+    display: inline-flex;
+    letter-spacing: 0;
+}
+
+.separator-colon {
+    margin: 0 20px;
+}
+
+.separator-ms {
+    margin-left: 15px; 
+}
+
+.ms-part {
+    font-size: 0.4em;
+    letter-spacing: 2px;
+}
+
+.blink {
+    animation: blink-animation 0.8s step-end infinite;
+}
+
+@keyframes blink-animation {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.1; }
+}
