@@ -6,11 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function parseURLParams() {
         const params = new URLSearchParams(window.location.search);
         let labelText = params.get('label');
-        let labelColorParam = params.get('label-color'); // Renamed
-        let timerColorParam = params.get('color');       // Added
+        let labelColorParam = params.get('label-color');
+        let timerColorParam = params.get('color');
         let flashEnabled = params.get('flash');
         let labelSize = params.get('size');
         let timerStartOnly = params.get('timer-start');
+        let startTimeParam = params.get('start-time'); // NEW PARAMETER
 
         // 1. Handle Label Text
         if (labelText) {
@@ -19,25 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
             labelEl.classList.add('visible');
         }
 
-        // 2. Handle Timer Color (Updates the CSS Variable)
+        // 2. Handle Timer Color
         if (timerColorParam) {
             timerColorParam = timerColorParam.replace('#', '');
             if (/^[0-9A-Fa-f]{6}$/.test(timerColorParam)) {
                 const hexColor = `#${timerColorParam}`;
-                // Update the CSS variable on the root element
                 document.documentElement.style.setProperty('--theme-color', hexColor);
-                // Update the shadow to match the new color dynamically
-                document.body.style.textShadow = `0 0 30px ${hexColor}33`; // Adds 20% opacity to the shadow
+                document.body.style.textShadow = `0 0 30px ${hexColor}33`;
             }
         }
 
-        // 3. Handle Label Color (Overrides the label specifically)
+        // 3. Handle Label Color
         if (labelColorParam) {
             labelColorParam = labelColorParam.replace('#', '');
             if (/^[0-9A-Fa-f]{6}$/.test(labelColorParam)) {
                 labelEl.style.color = `#${labelColorParam}`;
-                // Note: We specifically do NOT change the shadow here, 
-                // so the label remains readable against the dark background
             }
         }
 
@@ -60,6 +57,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (timerStartOnly !== null && timerStartOnly !== 'false') {
             labelEl.dataset.timerStartOnly = 'true';
             labelEl.style.opacity = '0';
+        }
+
+        // 7. Handle Start-Time (NEW: seconds based input)
+        if (startTimeParam) {
+            const seconds = parseInt(startTimeParam, 10);
+            if (!isNaN(seconds) && seconds >= 0) {
+                // Convert seconds to milliseconds
+                totalMillis = seconds * 1000;
+                totalStartMillis = totalMillis;
+                // Automatically start the timer
+                setTimeout(() => startTimer(), 100); // Small delay to ensure DOM is ready
+            }
         }
     }
     
