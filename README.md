@@ -10,4 +10,4 @@ Access via URL parameters:
 - `?timer-start=3600000` - Set initial timer in milliseconds
 
 ### Example:
-`https://yourusername.github.io/futuristic-timer/?label=Countdown&color=FF6B6B&size=48&flash=true`
+[input url when uploaded]
