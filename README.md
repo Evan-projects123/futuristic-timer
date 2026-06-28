@@ -1,2 +1,13 @@
-# futuristic-timer
-A minimalistic timer aimed at looking futuristic
+# Futuristic Timer
+
+## Usage
+Access via URL parameters:
+- `?label=Your+Label` - Set custom label
+- `?color=FF00FF` - Change timer color (hex without #)
+- `?label-color=FF0000` - Change label color
+- `?size=48` - Set label font size (px)
+- `?flash=true` - Enable flashing label
+- `?timer-start=3600000` - Set initial timer in milliseconds
+
+### Example:
+`https://yourusername.github.io/futuristic-timer/?label=Countdown&color=FF6B6B&size=48&flash=true`
