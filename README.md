@@ -7,7 +7,6 @@ Access via URL parameters:
 - `?label-color=FF0000` - Change label color
 - `?size=48` - Set label font size (px)
 - `?flash=true` - Enable flashing label
-- `?timer-start=3600` - Set timer in seconds (in this case, 1 hour)
 
 ### Deployment:
 https://evan-projects123.github.io/futuristic-timer/
