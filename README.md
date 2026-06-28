@@ -9,5 +9,5 @@ Access via URL parameters:
 - `?flash=true` - Enable flashing label
 - `?timer-start=3600` - Set timer in seconds (in this case, 1 hour)
 
-### Example:
-[input url when uploaded]
+### Deployment:
+https://evan-projects123.github.io/futuristic-timer/
