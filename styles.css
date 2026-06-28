@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'ChicagoFLF';
-    src: url('./fonts/ChicagoFLF.woff2') format('woff2');
+    src: url('/futuristic-timer/fonts/ChicagoFLF.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
@@ -12,22 +12,19 @@
 }
 
 :root {
-    /* Default color variable. JS will update this */
     --theme-color: #00ffcc; 
 }
 
 body {
     background-color: #050505;
-    /* Use the CSS variable for color */
     color: var(--theme-color);
-    font-family: 'ChicagoFLF', monospace;
+    font-family: 'ChicagoFLF', 'Courier New', monospace;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* Use the CSS variable for the glow */
-    text-shadow: 0 0 30px rgba(0, 255, 204, 0.3); /* Keep default glow, JS will update it dynamically */
+    text-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
     position: relative;
     transition: color 0.3s ease, text-shadow 0.3s ease;
 }
@@ -42,7 +39,6 @@ body {
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
-    /* Label defaults to the theme color, but can be overridden by JS */
     color: var(--theme-color);
 }
 
@@ -62,12 +58,11 @@ body {
 
 .timer-display {
     font-size: 8rem;
-    font-family: 'ChicagoFLF', monospace;
+    font-family: 'ChicagoFLF', 'Courier New', monospace;
     display: flex;
     align-items: baseline;
     user-select: none;
     margin-top: 0; 
-    /* Inherits body color */
 }
 
 .digit-pair {
